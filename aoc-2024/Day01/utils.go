@@ -37,3 +37,10 @@ func inputFlags() (string, string) {
 	flag.Parse() // after declaring flags we need to call it
 	return flagfile, partid
 }
+
+func abs(x int) int {
+	if x < 0 {
+		return -x // Flip the sign if the number is negative
+	}
+	return x
+}

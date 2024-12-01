@@ -14,8 +14,6 @@ func main() {
 	// pull in puzzle input
 	puzzleInput, _ := readFile(inputFile)
 
-	//splitintoSlices(puzzleInput)
-
 	p1Answer, p2Answer := (calculateDistances(puzzleInput))
 	fmt.Println("Part 1 =", p1Answer, "\nPart 2 =", p2Answer)
 
@@ -23,7 +21,7 @@ func main() {
 
 func calculateDistances(splitInput []string) (int, int) {
 	var leftSlice, rightSlice []int
-	var p1Distances, p1Calc, p2Calc, duplicates int
+	var p1Distances, p2Calc, duplicates int
 
 	for i := 0; i < len(splitInput); i++ {
 		splitLine := strings.Fields(splitInput[i])
@@ -38,12 +36,8 @@ func calculateDistances(splitInput []string) (int, int) {
 
 	// Part 1
 	for j := 0; j < len(leftSlice); j++ {
-		if leftSlice[j] > rightSlice[j] {
-			p1Calc = leftSlice[j] - rightSlice[j]
-		} else {
-			p1Calc = rightSlice[j] - leftSlice[j]
-		}
-		p1Distances = p1Distances + p1Calc
+		diff := abs(leftSlice[j] - rightSlice[j])
+		p1Distances += diff
 	}
 
 	// Part 2
@@ -55,10 +49,8 @@ func calculateDistances(splitInput []string) (int, int) {
 		}
 
 		p2Calc = p2Calc + leftSlice[k]*duplicates
-
 		// reset duplicates
 		duplicates = 0
 	}
-
 	return p1Distances, p2Calc
 }
