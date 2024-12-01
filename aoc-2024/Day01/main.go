@@ -16,13 +16,14 @@ func main() {
 
 	//splitintoSlices(puzzleInput)
 
-	fmt.Println("Part 1 =", splitintoSlices(puzzleInput))
+	p1Answer, p2Answer := (calculateDistances(puzzleInput))
+	fmt.Println("Part 1 =", p1Answer, "Part 2 =", p2Answer)
 
 }
 
-func splitintoSlices(splitInput []string) int {
+func calculateDistances(splitInput []string) (int, int) {
 	var leftSlice, rightSlice []int
-	var distances, calc int
+	var p1Distances, p1Calc, p2Calc, duplicates int
 
 	for i := 0; i < len(splitInput); i++ {
 		splitLine := strings.Fields(splitInput[i])
@@ -35,14 +36,29 @@ func splitintoSlices(splitInput []string) int {
 	slices.Sort(leftSlice)
 	slices.Sort(rightSlice)
 
+	// Part 1
 	for j := 0; j < len(leftSlice); j++ {
 		if leftSlice[j] > rightSlice[j] {
-			calc = leftSlice[j] - rightSlice[j]
+			p1Calc = leftSlice[j] - rightSlice[j]
 		} else {
-			calc = rightSlice[j] - leftSlice[j]
+			p1Calc = rightSlice[j] - leftSlice[j]
 		}
-		distances = distances + calc
+		p1Distances = p1Distances + p1Calc
 	}
 
-	return distances
+	// Part 2
+	for k := 0; k < len(leftSlice); k++ {
+		for l := 0; l < len(rightSlice); l++ {
+			if leftSlice[k] == rightSlice[l] {
+				duplicates++
+			}
+		}
+
+		p2Calc = p2Calc + leftSlice[k]*duplicates
+
+		// reset duplicates
+		duplicates = 0
+	}
+
+	return p1Distances, p2Calc
 }
