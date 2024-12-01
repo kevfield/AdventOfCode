@@ -17,7 +17,7 @@ func main() {
 	//splitintoSlices(puzzleInput)
 
 	p1Answer, p2Answer := (calculateDistances(puzzleInput))
-	fmt.Println("Part 1 =", p1Answer, "Part 2 =", p2Answer)
+	fmt.Println("Part 1 =", p1Answer, "\nPart 2 =", p2Answer)
 
 }
 
