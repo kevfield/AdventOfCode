@@ -10,7 +10,7 @@ import (
 )
 
 // read a file from an input and return into a slice of strings
-func readFile(filename string) ([]string, error) {
+func readFileAsString(filename string) ([]string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, err
@@ -26,8 +26,8 @@ func readFile(filename string) ([]string, error) {
 	return lines, scanner.Err()
 }
 
-// ReadFileAsIntSlice reads a file and returns its contents as a slice of integers.
-func ReadFileAsIntSlice(filename string) ([]int, error) {
+// ReadFileAsNestedIntSlice reads a file and returns its contents as a slice of slices of integers.
+func ReadFileAsNestedIntSlice(filename string) ([][]int, error) {
 	// Open the file
 	file, err := os.Open(filename)
 	if err != nil {
@@ -35,13 +35,16 @@ func ReadFileAsIntSlice(filename string) ([]int, error) {
 	}
 	defer file.Close()
 
-	var intSlice []int
+	var nestedIntSlice [][]int
 
 	// Use a scanner to read the file line by line
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		// Split each line into fields
-		fields := strings.Fields(scanner.Text())
+		line := scanner.Text()
+
+		// Split the line into fields
+		fields := strings.Fields(line)
+		var intSlice []int
 		for _, field := range fields {
 			// Convert each field to an integer
 			num, err := strconv.Atoi(field)
@@ -50,6 +53,9 @@ func ReadFileAsIntSlice(filename string) ([]int, error) {
 			}
 			intSlice = append(intSlice, num)
 		}
+
+		// Add the line's slice of integers to the main slice
+		nestedIntSlice = append(nestedIntSlice, intSlice)
 	}
 
 	// Check for scanner errors
@@ -57,7 +63,7 @@ func ReadFileAsIntSlice(filename string) ([]int, error) {
 		return nil, fmt.Errorf("error reading file: %w", err)
 	}
 
-	return intSlice, nil
+	return nestedIntSlice, nil
 }
 
 // use flags to get user input
