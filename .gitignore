@@ -25,5 +25,5 @@ go.work.sum
 .env
 
 # test files
-**/input
-**/testinput
+**/input.txt
+**/testinput.txt
