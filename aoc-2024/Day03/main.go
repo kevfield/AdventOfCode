@@ -12,7 +12,8 @@ func main() {
 	// pull in puzzle input
 	puzzleInput, _ := readFile(inputFile)
 
-	matchMul(puzzleInput)
+	matchMul(puzzleInput)       //part 1
+	matchmuldoDont(puzzleInput) //part 2
 
 }
 
@@ -28,4 +29,26 @@ func matchMul(matchInput []string) {
 	}
 	fmt.Println("Part 1: ", mulTotal)
 
+}
+
+func matchmuldoDont(dodontInput []string) {
+	var firstInt, secondInt, mulTotal, mulSingle int
+	mulProceed := true
+	regmuldoDont := regexp.MustCompile(`mul\(\d+,\d+\)|do\(\)|don't\(\)`)
+	extractedmuldoDont := regmuldoDont.FindAllString(dodontInput[0], -1)
+	for i := range len(extractedmuldoDont) {
+		switch extractedmuldoDont[i] {
+		case "do()":
+			mulProceed = true
+		case "don't()":
+			mulProceed = false
+		default:
+			if mulProceed {
+				fmt.Sscanf(extractedmuldoDont[i], "mul(%d,%d)", &firstInt, &secondInt)
+				mulSingle = firstInt * secondInt
+				mulTotal += mulSingle
+			}
+		}
+	}
+	fmt.Println("Part 2: ", mulTotal)
 }
