@@ -56,10 +56,6 @@ func validTests(inttoTest []int) (bool, int) {
 	return false, failures
 }
 
-func remove(slice []int, s int) []int {
-	return append(slice[:s], slice[s+1:]...)
-}
-
 func createSlice(importedSlice []int, index int) []int {
 	if index < 0 || index >= len(importedSlice) {
 		// Return the original slice if the index is out of bounds
