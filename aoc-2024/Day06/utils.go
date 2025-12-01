@@ -26,15 +26,6 @@ func readFile(filename string) ([]string, error) {
 	return lines, scanner.Err()
 }
 
-func readfileasString(filename string) (string, error) {
-	// Read the file content directly
-	content, err := os.ReadFile(filename)
-	if err != nil {
-		return "", err
-	}
-	return string(content), nil
-}
-
 // ReadFileAsIntSlice reads a file and returns its contents as a slice of integers.
 func ReadFileAsIntSlice(filename string) ([]int, error) {
 	// Open the file
